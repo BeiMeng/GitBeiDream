@@ -1,0 +1,2 @@
+﻿Dynamics中的类由微软提供，请参考以下Url
+https://code.msdn.microsoft.com/datajs-API-Quick-Start-9e28fe34/sourcecode?fileId=21226&pathId=214938652

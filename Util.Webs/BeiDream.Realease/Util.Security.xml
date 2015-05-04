@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Util.Security</name>
+    </assembly>
+    <members>
+        <member name="T:Util.Security.Identity">
+            <summary>
+            身份标识
+            </summary>
+        </member>
+        <member name="M:Util.Security.Identity.#ctor">
+            <summary>
+            初始化身份标识
+            </summary>
+        </member>
+        <member name="M:Util.Security.Identity.#ctor(System.Boolean,System.String)">
+            <summary>
+            初始化身份标识
+            </summary>
+            <param name="isAuthenticated">是否认证</param>
+            <param name="userId">用户标识</param>
+        </member>
+        <member name="M:Util.Security.Identity.Unauthenticated">
+            <summary>
+            未认证的身份标识
+            </summary>
+        </member>
+        <member name="P:Util.Security.Identity.AuthenticationType">
+            <summary>
+            认证类型
+            </summary>
+        </member>
+        <member name="P:Util.Security.Identity.IsAuthenticated">
+            <summary>
+            是否认证
+            </summary>
+        </member>
+        <member name="P:Util.Security.Identity.Name">
+            <summary>
+            用户标识
+            </summary>
+        </member>
+        <member name="P:Util.Security.Identity.UserId">
+            <summary>
+            用户编号
+            </summary>
+        </member>
+        <member name="P:Util.Security.Identity.FullName">
+            <summary>
+            用户姓名
+            </summary>
+        </member>
+        <member name="P:Util.Security.Identity.Role">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="P:Util.Security.Identity.ApplicationCode">
+            <summary>
+            应用程序编码
+            </summary>
+        </member>
+        <member name="P:Util.Security.Identity.Application">
+            <summary>
+            应用程序
+            </summary>
+        </member>
+        <member name="T:Util.Security.Principal">
+            <summary>
+            安全主体
+            </summary>
+        </member>
+        <member name="M:Util.Security.Principal.#ctor">
+            <summary>
+            初始化安全主体
+            </summary>
+        </member>
+        <member name="M:Util.Security.Principal.#ctor(System.Security.Principal.IIdentity)">
+            <summary>
+            初始化安全主体
+            </summary>
+        </member>
+        <member name="M:Util.Security.Principal.IsInRole(System.String)">
+            <summary>
+            验证用户是否允许访问资源，允许返回true
+            </summary>
+        </member>
+        <member name="M:Util.Security.Principal.Unauthenticated">
+            <summary>
+            未认证安全主体
+            </summary>
+        </member>
+        <member name="P:Util.Security.Principal.Identity">
+            <summary>
+            身份标识
+            </summary>
+        </member>
+        <member name="T:Util.Security.SecurityContext">
+            <summary>
+            安全上下文
+            </summary>
+        </member>
+        <member name="P:Util.Security.SecurityContext.User">
+            <summary>
+            当前用户安全主体
+            </summary>
+        </member>
+        <member name="P:Util.Security.SecurityContext.Identity">
+            <summary>
+            当前用户身份标识
+            </summary>
+        </member>
+        <member name="T:Util.Security.UnauthenticatedIdentity">
+            <summary>
+            未认证的身份标识
+            </summary>
+        </member>
+        <member name="M:Util.Security.UnauthenticatedIdentity.#ctor">
+            <summary>
+            初始化未认证的身份标识
+            </summary>
+        </member>
+        <member name="T:Util.Security.UnauthenticatedPrincipal">
+            <summary>
+            未认证的安全主体
+            </summary>
+        </member>
+        <member name="M:Util.Security.UnauthenticatedPrincipal.#ctor">
+            <summary>
+            初始化未认证的安全主体
+            </summary>
+        </member>
+    </members>
+</doc>

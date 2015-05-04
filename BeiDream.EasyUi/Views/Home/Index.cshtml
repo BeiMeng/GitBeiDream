@@ -1,0 +1,20 @@
+﻿@*@using Util.Webs.EasyUi;在View的Web.config里注册之后就不用在页面上引用了*@
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="easyui-accordion" data-options="fit:true,border:false">
+    <div title="Title1" data-options="iconCls:'icon-save'" style="overflow:auto;">
+        @Html.EasyUi().Tree("/Home/GetTree", "divMenuTree")
+    </div>
+    <div title="Title2" data-options="iconCls:'icon-reload'" style="padding:10px;">
+        <ul class="easyui-tree" id="divMenuTree" data-options="url:'/Home/GetTree'"></ul>
+    </div>
+    <div title="Title3">
+@using (Html.Bootstrap().Container().SetFluid().Begin())
+{
+    @Html.Bootstrap().Button().SetText("测试").SetState(ButtonState.Success).SetIcon(Icon.Apple)
+}
+    </div>
+</div>
+
