@@ -1,0 +1,58 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section head{
+    <style type="text/css">
+        body {
+            font-size: 12px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 23px;
+            margin: 0;
+            padding: 0;
+            background: url(/Content/images/login/login_bg.jpg);
+            color: #3b6e81;
+        }
+
+        .Login_Div {
+            margin: 0 auto;
+            width: 700px;
+            height: 600px;
+            margin-top: 10%;
+            padding-left: 300px;
+            padding-top: 110px;
+            background: url(/Content/images/login/login_panel.png) no-repeat;
+            position: relative;
+        }
+        .logo {
+            position: absolute;
+            left: 50px;
+            top: 80px;
+            width: 160px;
+            height: 100px;
+        }
+    </style>
+}
+ 
+@using (Html.Bootstrap().Container().AddCss("Login_Div").Begin())
+{
+    using (Html.Bootstrap().Div().Begin())
+    {
+        using (Html.Bootstrap().Image("/Content/images/login/logo.jpg", "").AddCss("logo").Begin())
+        {
+        }
+    }
+    using (var form = Html.Bootstrap().Form().SetHorizontal().Begin())
+    {
+        using (form.FormGroup().Begin())
+        {
+            @form.ControlLabel("用户名").SetMd(4)
+            @form.Input("UserName").SetMd(8).SetFeedback(Icon.User).SetPlaceholder("请输入用户名")
+        }
+        using (form.FormGroup().Begin())
+        {
+            @form.ControlLabel("密码").SetMd(4)
+            @form.Input("PassWord", null, null, null, FormInputType.Password).SetMd(8).SetFeedback(Icon.Pencil).SetPlaceholder("请输入密码")
+        }
+    }
+}
+.

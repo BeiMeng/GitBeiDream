@@ -109,6 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -143,6 +144,9 @@
     <Content Include="Content\icons\remove.png" />
     <Content Include="Content\icons\save.png" />
     <Content Include="Content\icons\search.png" />
+    <Content Include="Content\images\Login\login_bg.jpg" />
+    <Content Include="Content\images\Login\login_panel.png" />
+    <Content Include="Content\images\Login\Logo.jpg" />
     <Content Include="Content\images\uploaders\bg.png" />
     <Content Include="Content\images\uploaders\icons.png" />
     <Content Include="Content\images\uploaders\image.png" />
@@ -508,6 +512,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\css\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -554,6 +559,9 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
