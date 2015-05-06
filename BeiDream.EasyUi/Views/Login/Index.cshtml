@@ -35,19 +35,43 @@
 @section Scripts{
     <script type="text/javascript">
         $(function() {
-            $("form").submit(function (e) {
-                alert("Submitted");
-            });
-            $("#code").click(function () {
+            $("#code").click(function() {
                 $("#code").attr("src", "/Login/GetVerifyCode" + "?_dc=" + (new Date()).getTime());
             });
-        })
+        });
 
+        function loginClick() {
+            var data = $("#LoginForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Login/LoginOn",
+                data: data,
+                dataType: "json",
+                success: function(d) {
+                    if (d.status == 'success') {
+                        window.location.href = '/';
+                    } else {
+                        alert(d.message);
+                    }
+                },
+                error: function(e) {
+                    alert(e.responseText);
+                },
+                beforeSend: function() {
+                    $('#LoginForm').find("input").attr("disabled", true);
+                    $('#LoginForm').find("button").attr("disabled", true);
+                },
+                complete: function() {
+                    $('#LoginForm').find("input").attr("disabled", false);
+                    $('#LoginForm').find("button").attr("disabled", true);
+                }
+            });
+        }
     </script>
 }
 @using (Html.Bootstrap().Container().AddCss("Login_Div").Begin())
 {
-    using (var form = Html.Bootstrap().Form().SetHorizontal(0).Begin())
+    using (var form = Html.Bootstrap().Form().SetHorizontal(0).SetId("LoginForm").AddAttribute("onSubmit", "return false;").Begin())
     {
         using (Html.Bootstrap().Div().Begin())
         {
@@ -79,11 +103,11 @@
             }
 
         }
-       @form.CheckBox("Check", "", "记住我").SetMd(4).SetMdOffset(4)
-     
+       @form.CheckBox("RememberMe", "", "记住我").SetMd(4).SetMdOffset(4).AddAttribute("value", "true") //加了value=true，选择之后才会传true，否则传on
+
         using (form.FormGroup().SetMdOffset(4).Begin())
         {
-            @form.Submit("登录").SetMd(2).SetSize(ButtonSize.Lg)
+            @form.Submit("登录").SetMd(2).SetSize(ButtonSize.Lg).AddAttribute("onClick", "loginClick()")
             @form.Reset("重置").SetMd(2).SetMdOffset(2).SetSize(ButtonSize.Lg)
         }
     }

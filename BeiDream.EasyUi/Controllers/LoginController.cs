@@ -1,4 +1,5 @@
 ﻿using BeiDream.EasyUi.Common;
+using BeiDream.EasyUi.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +22,15 @@ namespace BeiDream.EasyUi.Controllers
         {
             VerifyCode v = new VerifyCode();
             string code = v.CreateVerifyCode();                //取随机码
-            //Session["vcode"] = code;
             SessionHelper.SetSession("vcode", code);
             v.Padding = 10;
             byte[] bytes = v.CreateImage(code);
             return File(bytes, @"image/jpeg");
+        }
+        [HttpPost]
+        public JsonResult LoginOn(LogOnModel model)
+        {
+            return Json("OK");
         }
     }
 }
