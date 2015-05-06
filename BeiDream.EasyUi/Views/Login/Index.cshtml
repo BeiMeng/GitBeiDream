@@ -18,8 +18,8 @@
             width: 700px;
             height: 600px;
             margin-top: 10%;
-            padding-left: 300px;
-            padding-top: 110px;
+            padding-left: 120px;
+            padding-top: 80px;
             background: url(/Content/images/login/login_panel.png) no-repeat;
             position: relative;
         }
@@ -32,27 +32,59 @@
         }
     </style>
 }
- 
+@section Scripts{
+    <script type="text/javascript">
+        $(function() {
+            $("form").submit(function (e) {
+                alert("Submitted");
+            });
+            $("#code").click(function () {
+                $("#code").attr("src", "/Login/GetVerifyCode" + "?_dc=" + (new Date()).getTime());
+            });
+        })
+
+    </script>
+}
 @using (Html.Bootstrap().Container().AddCss("Login_Div").Begin())
 {
-    using (Html.Bootstrap().Div().Begin())
+    using (var form = Html.Bootstrap().Form().SetHorizontal(0).Begin())
     {
-        using (Html.Bootstrap().Image("/Content/images/login/logo.jpg", "").AddCss("logo").Begin())
+        using (Html.Bootstrap().Div().Begin())
         {
+            using (Html.Bootstrap().Image("/Content/images/login/logo.jpg", "").AddCss("logo").Begin())
+            {
+            }
         }
-    }
-    using (var form = Html.Bootstrap().Form().SetHorizontal().Begin())
-    {
+        using (form.FormGroup().Begin())
+        {
+            
+        }
         using (form.FormGroup().Begin())
         {
             @form.ControlLabel("用户名").SetMd(4)
-            @form.Input("UserName").SetMd(8).SetFeedback(Icon.User).SetPlaceholder("请输入用户名")
+            @form.Input("UserName").SetMd(6).SetFeedback(Icon.User).SetPlaceholder("请输入用户名")
         }
         using (form.FormGroup().Begin())
         {
             @form.ControlLabel("密码").SetMd(4)
-            @form.Input("PassWord", null, null, null, FormInputType.Password).SetMd(8).SetFeedback(Icon.Pencil).SetPlaceholder("请输入密码")
+            @form.Input("PassWord", null, null, null, FormInputType.Password).SetMd(6).SetFeedback(Icon.Pencil).SetPlaceholder("请输入密码")
+        }
+        using (form.FormGroup().Begin())
+        {
+            @form.ControlLabel("验证码").SetMd(4)
+            @form.Input("Vcode").SetMd(3)
+            using (Html.Bootstrap().Div().AddCss("col-md-2").Begin())
+            {
+                @Html.Bootstrap().Image("/Login/GetVerifyCode").SetId("code").AddStyle("height", "35px").AddStyle("width", "110px").AddStyle("cursor", "pointer")
+            }
+
+        }
+       @form.CheckBox("Check", "", "记住我").SetMd(4).SetMdOffset(4)
+     
+        using (form.FormGroup().SetMdOffset(4).Begin())
+        {
+            @form.Submit("登录").SetMd(2).SetSize(ButtonSize.Lg)
+            @form.Reset("重置").SetMd(2).SetMdOffset(2).SetSize(ButtonSize.Lg)
         }
     }
 }
-.

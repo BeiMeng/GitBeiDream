@@ -108,6 +108,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\SessionHelper.cs" />
+    <Compile Include="Common\VerifyCode.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
@@ -513,7 +515,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\css\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
