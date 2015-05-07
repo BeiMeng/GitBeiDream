@@ -117,6 +117,8 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\LoginOnModel.cs" />
+    <Compile Include="WebUI\JsonExtension.cs" />
+    <Compile Include="WebUI\JsonResultExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -528,6 +530,10 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BeiDream.Service\BeiDream.Service.csproj">
+      <Project>{1ffcf55a-0821-4665-b2de-499cb6910b8d}</Project>
+      <Name>BeiDream.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FluentBootstrap.Mvc\FluentBootstrap.Mvc.csproj">
       <Project>{dc78ef6d-b139-447e-989e-562aacb4f52f}</Project>
       <Name>FluentBootstrap.Mvc</Name>

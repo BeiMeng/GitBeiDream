@@ -19,7 +19,7 @@
             height: 600px;
             margin-top: 10%;
             padding-left: 120px;
-            padding-top: 80px;
+            padding-top: 60px;
             background: url(/Content/images/login/login_panel.png) no-repeat;
             position: relative;
         }
@@ -41,29 +41,36 @@
         });
 
         function loginClick() {
-            var data = $("#LoginForm").serialize();
+            $("#msg").css("display", "none");
+            var data = $("#LoginForm").serializeArray();
+            //todo:客户端验证未做
             $.ajax({
                 type: "POST",
                 url: "/Login/LoginOn",
                 data: data,
                 dataType: "json",
                 success: function(d) {
-                    if (d.status == 'success') {
-                        window.location.href = '/';
+                    if (d.Success) {
+                        $("#msg").html("登录成功正在跳转,请稍后.......");
+                        $("#msg").css("display", "inline");
+                        window.location.href = "/Home/Index";
                     } else {
-                        alert(d.message);
+                        $("#msg").html(d.Msg);
+                        $("#msg").css("display", "inline");
                     }
                 },
                 error: function(e) {
                     alert(e.responseText);
                 },
-                beforeSend: function() {
-                    $('#LoginForm').find("input").attr("disabled", true);
-                    $('#LoginForm').find("button").attr("disabled", true);
+                beforeSend: function () {
+                    $("#msg").html("正在登录,请稍后.......");
+                    $("#msg").css("display", "inline");
+                    $("#LoginForm").find("input").attr("disabled", true);
+                    $("#LoginForm").find("button").attr("disabled", true);
                 },
                 complete: function() {
-                    $('#LoginForm').find("input").attr("disabled", false);
-                    $('#LoginForm').find("button").attr("disabled", true);
+                    $("#LoginForm").find("input").attr("disabled", false);
+                    $("#LoginForm").find("button").attr("disabled", false);
                 }
             });
         }
@@ -73,15 +80,12 @@
 {
     using (var form = Html.Bootstrap().Form().SetHorizontal(0).SetId("LoginForm").AddAttribute("onSubmit", "return false;").Begin())
     {
+        @Html.Bootstrap().Heading6().AddStyle("padding-left", "200px").AddStyle("color", "red").AddStyle("display", "none").SetId("msg")
         using (Html.Bootstrap().Div().Begin())
         {
             using (Html.Bootstrap().Image("/Content/images/login/logo.jpg", "").AddCss("logo").Begin())
             {
             }
-        }
-        using (form.FormGroup().Begin())
-        {
-            
         }
         using (form.FormGroup().Begin())
         {
