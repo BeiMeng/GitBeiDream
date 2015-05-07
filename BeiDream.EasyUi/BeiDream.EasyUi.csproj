@@ -149,6 +149,7 @@
     <Content Include="Content\icons\remove.png" />
     <Content Include="Content\icons\save.png" />
     <Content Include="Content\icons\search.png" />
+    <Content Include="Content\images\head_bg.gif" />
     <Content Include="Content\images\Login\login_bg.jpg" />
     <Content Include="Content\images\Login\login_panel.png" />
     <Content Include="Content\images\Login\Logo.jpg" />

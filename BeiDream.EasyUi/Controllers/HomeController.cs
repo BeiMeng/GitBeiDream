@@ -15,6 +15,7 @@ namespace BeiDream.EasyUi.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.UserName = "管理员";
             return View();
 
         }
