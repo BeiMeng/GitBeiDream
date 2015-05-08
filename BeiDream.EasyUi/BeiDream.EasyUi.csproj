@@ -131,28 +131,42 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\common.css" />
     <Content Include="Content\icon.css" />
-    <Content Include="Content\icons\add.png" />
-    <Content Include="Content\icons\add_2.png" />
-    <Content Include="Content\icons\arrow_down.png" />
-    <Content Include="Content\icons\arrow_up.png" />
+    <Content Include="Content\icons\back.png" />
+    <Content Include="Content\icons\blank.gif" />
     <Content Include="Content\icons\cancel.png" />
-    <Content Include="Content\icons\delete.png" />
-    <Content Include="Content\icons\edit.png" />
-    <Content Include="Content\icons\edit_2.png" />
-    <Content Include="Content\icons\eye.png" />
-    <Content Include="Content\icons\house.png" />
-    <Content Include="Content\icons\icons.png" />
+    <Content Include="Content\icons\clear.png" />
+    <Content Include="Content\icons\cut.png" />
+    <Content Include="Content\icons\edit_add.png" />
+    <Content Include="Content\icons\edit_remove.png" />
+    <Content Include="Content\icons\filesave.png" />
+    <Content Include="Content\icons\filter.png" />
+    <Content Include="Content\icons\help.png" />
+    <Content Include="Content\icons\large_chart.png" />
+    <Content Include="Content\icons\large_clipart.png" />
+    <Content Include="Content\icons\large_picture.png" />
+    <Content Include="Content\icons\large_shapes.png" />
+    <Content Include="Content\icons\large_smartart.png" />
+    <Content Include="Content\icons\lock.png" />
+    <Content Include="Content\icons\man.png" />
+    <Content Include="Content\icons\mini_add.png" />
+    <Content Include="Content\icons\mini_edit.png" />
+    <Content Include="Content\icons\mini_refresh.png" />
+    <Content Include="Content\icons\more.png" />
     <Content Include="Content\icons\no.png" />
     <Content Include="Content\icons\ok.png" />
-    <Content Include="Content\icons\pdf.png" />
+    <Content Include="Content\icons\pencil.png" />
+    <Content Include="Content\icons\print.png" />
+    <Content Include="Content\icons\redo.png" />
     <Content Include="Content\icons\reload.png" />
-    <Content Include="Content\icons\remove.png" />
-    <Content Include="Content\icons\save.png" />
     <Content Include="Content\icons\search.png" />
+    <Content Include="Content\icons\sum.png" />
+    <Content Include="Content\icons\tip.png" />
+    <Content Include="Content\icons\undo.png" />
     <Content Include="Content\images\head_bg.gif" />
     <Content Include="Content\images\Login\login_bg.jpg" />
     <Content Include="Content\images\Login\login_panel.png" />
     <Content Include="Content\images\Login\Logo.jpg" />
+    <Content Include="Content\images\noscript.gif" />
     <Content Include="Content\images\uploaders\bg.png" />
     <Content Include="Content\images\uploaders\icons.png" />
     <Content Include="Content\images\uploaders\image.png" />
@@ -571,6 +585,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Login\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Top.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Left.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Footer.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Center.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

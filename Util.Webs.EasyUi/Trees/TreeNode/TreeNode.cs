@@ -26,6 +26,12 @@ namespace Util.Webs.EasyUi.Trees {
         [DataMember]
         public string Text { get; set; }
         /// <summary>
+        /// 文本
+        /// </summary>
+        [Json(PropertyName = "iconCls", NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember]
+        public string Icon { get; set; }
+        /// <summary>
         /// 级数
         /// </summary>
         public int? Level { get; set; }
