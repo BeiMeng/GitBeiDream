@@ -18,29 +18,7 @@
 }
 @section Scripts{
     <script type="text/javascript">
-        $('#tt').tree({
-            animate:true,
-            data: [{
-                text: 'Item1',
-                state: 'closed',
-                iconCls: 'icon-add',
-                children: [{
-                    text: "Add",
-                    iconCls: "icon-add"
-                }, {
-                    text: "Remove",
-                    iconCls: "icon-remove"
-                }, {
-                    text: "Save",
-                    iconCls: "icon-save"
-                }, {
-                    text: "Search",
-                    iconCls: "icon-search"
-                }]
-            }, {
-                text: 'Item2'
-            }]
-        });
+
     </script>
 }
 <body class="easyui-layout" fit="true" scroll="no">
@@ -50,7 +28,7 @@
     </div>
 </noscript>
     @Html.Partial("Top")
-    @Html.Partial("Left")
+    @Html.Action("LeftMenu")
     @Html.Partial("Center")
     @Html.Partial("Footer")
 </body>

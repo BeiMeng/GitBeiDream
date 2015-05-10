@@ -6,16 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     <link href="~/Content/common.css" rel="stylesheet" />
-    <link href="~/Content/icon.css" rel="stylesheet" />
     <link href="~/Content/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/bootstrap/bootstrap-theme.css" rel="stylesheet" />
-    <link href="~/Scripts/EasyUi/themes/default/easyui.css" rel="stylesheet" />
-    <link type="text/css" rel="stylesheet" href="/Content/uploadIcons/icon.css" />
-    <link type="text/css" rel="stylesheet" href="/Scripts/WebUploader/webuploader.css" />
-    <script type="text/javascript" src="/Scripts/JQuery/jquery.min.js"></script>
-    <script type="text/javascript" src="/Scripts/EasyUi/jquery.easyui.min.js"></script>
-    <script type="text/javascript" src="/Scripts/JQuery/jquery.json-2.4.min.js"></script>
-    <script type="text/javascript" src="/Scripts/WebUploader/webuploader.min.js"></script>
+    <link href="~/Scripts/EasyUi/themes/default/easyui.css" rel="stylesheet"/>
+    @*图标的css文件要放在easyui的主题css文件之后，否则会有可能图标显示不出来,例如tree的图标*@
+    <link href="~/Content/icon.css" rel="stylesheet" />  
+    <link type="text/css" rel="stylesheet" href="~/Content/uploadIcons/icon.css" />
+    <link type="text/css" rel="stylesheet" href="~/Scripts/WebUploader/webuploader.css" />
+    <script type="text/javascript" src="~/Scripts/JQuery/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/EasyUi/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/JQuery/jquery.json-2.4.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/WebUploader/webuploader.min.js"></script>
     <script src="~/Scripts/bootstrap/bootstrap.min.js"></script>
     @RenderSection("head", false)
 </head>

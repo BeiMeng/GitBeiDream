@@ -1,13 +1,22 @@
-﻿<div data-options="region:'west',title:'功能菜单',split:true,maxWidth:500" style="width:180px;">
-    <div class="easyui-accordion" data-options="fit:true,border:false">
-        <div title="Title1" data-options="iconCls:'icon-save'" style="overflow:auto;">
-            @Html.EasyUi().Tree("/Home/GetTree", "divMenuTree")
-        </div>
-        <div title="Title2" data-options="iconCls:'icon-reload'" style="padding:10px;">
-            <ul class="easyui-tree" id="divMenuTree" data-options="url:'/Home/GetTree'"></ul>
-        </div>
-        <div title="Title3">
+﻿@using Util.Webs.EasyUi.Trees;
+@model ICollection<TreeNode>
+    <div data-options="region:'west',title:'功能菜单',split:true,maxWidth:500" style="width:180px;">
+        <div class="easyui-accordion" data-options="fit:true,border:false">
+            @foreach (var p in Model)
+            {
+                using (Html.Bootstrap().Div().AddAttribute("title",p.Text).Begin())
+                {
+                    @Html.EasyUi().Tree("/Home/GetMenuTree?parentId=" + p.Id, "divMenuTree")
+                }
+            }
+            <div title="Title1" data-options="iconCls:'icon-save'" style="overflow: auto;">
+                @Html.EasyUi().Tree("/Home/GetMenuTree", "divMenuTree")
+            </div>
+            <div title="Title2" data-options="iconCls:'icon-reload'" style="padding: 10px;">
+                <ul class="easyui-tree" id="divMenuTree" data-options="url:'/Home/GetMenuTree'"></ul>
+            </div>
+            <div title="Title3">
 
+            </div>
         </div>
     </div>
-</div>
