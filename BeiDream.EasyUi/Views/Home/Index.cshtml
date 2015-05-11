@@ -1,7 +1,4 @@
 ﻿@*@using Util.Webs.EasyUi;在View的Web.config里注册之后就不用在页面上引用了*@
-@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
 @section head{
     <style type="text/css">
         .noscript {
@@ -14,11 +11,20 @@
             background: white;
             text-align: center;
         }
+        .footer {
+            text-align: center;
+            color: #15428B;
+            margin: 0px;
+            padding: 0px;
+            line-height: 23px;
+            font-weight: bold;
+        }
     </style>
 }
 @section Scripts{
+    <script src="~/Scripts/Projects/project.index.js"></script>
     <script type="text/javascript">
-
+        
     </script>
 }
 <body class="easyui-layout" fit="true" scroll="no">

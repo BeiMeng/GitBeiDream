@@ -26,7 +26,7 @@ namespace Util.Webs.EasyUi.Trees {
         [DataMember]
         public string Text { get; set; }
         /// <summary>
-        /// 文本
+        ///图标
         /// </summary>
         [Json(PropertyName = "iconCls", NullValueHandling = NullValueHandling.Ignore)]
         [DataMember]

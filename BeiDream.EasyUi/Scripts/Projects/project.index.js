@@ -2,35 +2,32 @@
 $(function () {
     //主界面选项卡
     var $tabs = $('#divMainTabs');
-    collapseFoot();
     addDesktopTab();
     bindTreeClick();
-    bindTabsMenuClick();
     bindTabsEvent();
+    bindTabsMenuClick();
 
-    //收缩页脚
-    function collapseFoot() {
-        $('#divMain').layout('collapse', 'south');
-    }
+
 
     //添加我的桌面选项卡
     function addDesktopTab() {
-        $.easyui.addIframeToTabs("divMainTabs", "我的桌面", "/Desktop/Index", "icon-house", false);
+        $.easyui.addIframeToTabs("divMainTabs", "我的桌面", "/Desktop/Index", "icon-save", false);
     }
 
     //绑定左侧树单击事件
     function bindTreeClick() {
-        $('#divMenuTree').tree({
+        //将选择改为class选择器,默认使用divMenuTree的class为左侧导航树菜单,所有左侧导航树均添加class=divMenuTree
+        $(".divMenuTree").tree({
             onClick: function (node) {
                 if (!node.attributes)
                     return;
-                $.easyui.addIframeToTabs("divMainTabs", node.text, node.attributes.url, node.attributes.icon, true);
+                $.easyui.addIframeToTabs("divMainTabs", node.text, node.attributes.url, node.iconCls, true);
                 bindTabsEvent();
             }
         });
     }
 
-    //绑定选项卡菜单单击事件
+    //绑定选项卡右键菜单单击事件
     function bindTabsMenuClick() {
         bindMenuClick('divTabsMenu');
         bindMenuClick('divDesktopTabsMenu');

@@ -14,9 +14,25 @@ namespace Util.Webs.EasyUi.Trees {
         /// </summary>
         string ParentId { get; set; }
         /// <summary>
+        /// 文本
+        /// </summary>
+        string Text { get; set; }
+        /// <summary>
+        ///图标
+        /// </summary>
+        string IconClass { get; set; }
+        /// <summary>
         /// 级数
         /// </summary>
         int? Level { get; set; }
+        /// <summary>
+        /// 是否选中
+        /// </summary>
+        bool? Checked { get; set; }
+        /// <summary>
+        /// 自定义扩展属性
+        /// </summary>
+        object Attributes { get; set; }
         /// <summary>
         /// 状态
         /// </summary>
