@@ -1,4 +1,8 @@
-﻿@section SitePath {
+﻿@model Util.Webs.EasyUi.Trees.ITreeNode
+@{
+    var x = @Html.EasyUi();
+}
+@section SitePath {
     @*站点路径*@
     <div class="titlebar">
         <span class="title">当前位置：</span>
@@ -9,12 +13,34 @@
         <span>权限管理</span>
     </div>
 }
+@section head {
+    <style type="text/css">
+        .toolbar button {
+            margin-left: 5px;
+        }
+    </style>
+
+}
 @section top {
     @*工具栏*@
     <div class="toolbar">
-        <a id="btn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">easyui</a>
+        @Html.Bootstrap().Button("新增").SetIcon(Icon.Inbox).SetState(ButtonState.Primary).SetSize(ButtonSize.Xs).AddAttribute("data-toggle", "tooltip").AddAttribute("title", "进行该操作后,记得保存")
+        @Html.Bootstrap().Button("编辑").SetIcon(Icon.Pencil).SetState(ButtonState.Info).SetSize(ButtonSize.Xs).AddAttribute("data-toggle", "tooltip").AddAttribute("title", "进行该操作后,记得保存")
+        @Html.Bootstrap().Button("撤销").SetIcon(Icon.Stop).SetState(ButtonState.Warning).SetSize(ButtonSize.Xs)
+        @Html.Bootstrap().Button("删除").SetIcon(Icon.Remove).SetState(ButtonState.Danger).SetSize(ButtonSize.Xs).AddAttribute("data-toggle", "tooltip").AddAttribute("title", "进行该操作后,记得保存")
+        @Html.Bootstrap().Button("上移").SetIcon(Icon.ArrowUp).SetState(ButtonState.Primary).SetSize(ButtonSize.Xs).AddAttribute("data-toggle", "tooltip").AddAttribute("title", "进行该操作后,记得保存")
+        @Html.Bootstrap().Button("下移").SetIcon(Icon.ArrowDown).SetState(ButtonState.Warning).SetSize(ButtonSize.Xs).AddAttribute("data-toggle", "tooltip").AddAttribute("title", "进行该操作后,记得保存")
+        @Html.Bootstrap().Button("保存").SetIcon(Icon.Save).SetState(ButtonState.Success).SetSize(ButtonSize.Xs)
+        @Html.Bootstrap().Button("刷新").SetIcon(Icon.Refresh).SetState(ButtonState.Info).SetSize(ButtonSize.Xs)
     </div>
 }
 @section content {
-    <div>我是内容页</div>
+    @*表格*@
+    @(x.TreeGrid("grid").Url("/Systems/MenuManage/Query").Fit()
+            .Menu().EnableDrag()
+            .Columns(
+                x.GridColumn(t => t.Id).CheckBox(),
+                x.GridColumn(t => t.Text, 600, true)
+            )
+    )
 }
