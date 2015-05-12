@@ -1,4 +1,4 @@
-﻿@model Util.Webs.EasyUi.Trees.ITreeNode
+﻿@model BeiDream.EasyUi.Areas.Systems.ViewModel.MenuViewModel
 @{
     var x = @Html.EasyUi();
 }
@@ -36,11 +36,11 @@
 }
 @section content {
     @*表格*@
-    @(x.TreeGrid("grid").Url("/Systems/MenuManage/Query").Fit()
-            .Menu().EnableDrag()
+    @(x.TreeGrid("grid").Url("/Systems/MenuManage/Query").Fit()            
             .Columns(
                 x.GridColumn(t => t.Id).CheckBox(),
-                x.GridColumn(t => t.Text, 600, true)
+                x.GridColumn(t => t.Text),
+                x.GridColumn( t => t.IconClass)
             )
     )
 }

@@ -43,6 +43,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -110,7 +111,13 @@
   <ItemGroup>
     <Compile Include="Areas\Systems\Controllers\MenuManageController.cs" />
     <Compile Include="Areas\Systems\SystemsAreaRegistration.cs" />
+    <Compile Include="Areas\Systems\ViewModel\MenuViewModel.cs" />
+    <Compile Include="Common\Page\IPager.cs" />
+    <Compile Include="Common\Page\PagedList.cs" />
+    <Compile Include="Common\Page\Pager.cs" />
+    <Compile Include="Common\Page\PagerList.cs" />
     <Compile Include="Common\SessionHelper.cs" />
+    <Compile Include="Common\Page\StateDescription.cs" />
     <Compile Include="Common\VerifyCode.cs" />
     <Compile Include="Controllers\DesktopController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
