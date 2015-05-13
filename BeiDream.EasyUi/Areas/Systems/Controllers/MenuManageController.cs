@@ -25,13 +25,27 @@ namespace BeiDream.EasyUi.Areas.Systems.Controllers
 
         public ActionResult Query(QueryModel query)
         {
-            List<ITreeNode> treeNodes = _menuService.GetNavigationMenu();
-            foreach (var treeNode in treeNodes)
+            List<ITreeNode> treeNodes;
+            if (query.Id == null)
             {
-                treeNode.state = "closed";
+                treeNodes = _menuService.GetNavigationMenu();
+                foreach (var treeNode in treeNodes)
+                {
+                    treeNode.state = "closed";
+                }
+                PagedList<ITreeNode> result = new PagedList<ITreeNode>(treeNodes, query.Page, query.Rows);
+                return Json(new TreeGridResult { rows = result, total = result.TotalItemCount });
             }
-            PagedList<ITreeNode> result = new PagedList<ITreeNode>(treeNodes, query.Page, query.Rows);
-            return Json(new TreeGridResult { rows = result, total = result.TotalItemCount });
+            else
+            {
+                treeNodes = _menuService.GetNavigationMenuChildrenNodes(query.Id);
+                foreach (var treeNode in treeNodes)
+                {
+                    treeNode.state = "closed";
+                }
+                return Json(treeNodes);
+            }
+
         }
     }
 

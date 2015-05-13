@@ -22,10 +22,17 @@ namespace BeiDream.Service.IService
         /// <returns></returns>
         List<ITreeNode> GetNavigationMenuTreeByPath(string parentId);
         /// <summary>
-        /// 根据导航菜单ID获取其下面的菜单树(通过查找物理路径方式)
+        /// 根据导航菜单ID获取其下面的菜单树(通过递归查询子节点方式)
         /// </summary>
         /// <param name="parentId">父ID</param>
         /// <returns></returns>
         List<ITreeNode> GetNavigationMenuTreeByChildren(string parentId);
+
+        /// <summary>
+        /// 根据父ID找到其下的子节点
+        /// </summary>
+        /// <param name="parentId"></param>
+        /// <returns></returns>
+        List<ITreeNode> GetNavigationMenuChildrenNodes(string parentId);
     }
 }

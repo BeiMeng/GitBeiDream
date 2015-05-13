@@ -56,11 +56,11 @@ namespace BeiDream.Service.PetaPoco.Service
 
         public List<ITreeNode> GetNavigationMenuTreeByChildren(string parentId)
         {
-            List<ITreeNode> treeNodes = GetMenuTreeByParentId(parentId);
+            List<ITreeNode> treeNodes = GetNavigationMenuChildrenNodes(parentId);
             return GetTreeChildren(treeNodes);
         }
 
-        private List<ITreeNode> GetMenuTreeByParentId(string parentId)
+        public List<ITreeNode> GetNavigationMenuChildrenNodes(string parentId)
         {
             List<ITreeNode> treeNodes = new List<ITreeNode>();
             Sql sql = new Sql();
@@ -85,7 +85,7 @@ namespace BeiDream.Service.PetaPoco.Service
         {
             foreach (var treeNode in treeList)
             {
-                List<ITreeNode> childrenTreeNodes = GetMenuTreeByParentId(treeNode.Id);
+                List<ITreeNode> childrenTreeNodes = GetNavigationMenuChildrenNodes(treeNode.Id);
                 treeNode.children = childrenTreeNodes;
                 if (treeList.Count > 0)
                 {
@@ -94,5 +94,7 @@ namespace BeiDream.Service.PetaPoco.Service
             }
             return treeList;
         }
+
+
     }
 }
