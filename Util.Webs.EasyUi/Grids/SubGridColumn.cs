@@ -214,7 +214,7 @@ namespace Util.Webs.EasyUi.Grids {
         /// </summary>
         /// <param name="width">宽度</param>
         /// <param name="height">高度</param>
-        public ISubGridColumn FormatImage( int width = 16, int height = 16 ) {
+        public ISubGridColumn FormatImage( int width = 16, int height = 16,bool isClass=false ) {
             return this;
         }
 

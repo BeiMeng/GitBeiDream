@@ -39,8 +39,8 @@
     @(x.TreeGrid("grid").Url("/Systems/MenuManage/Query").Fit()            
             .Columns(
                 x.GridColumn(t => t.Id).CheckBox(),
-                x.GridColumn(t => t.Text),
-                x.GridColumn( t => t.IconClass)
+                x.GridColumn(t => t.Text,200,true),
+                                x.GridColumn(t => t.IconClass, 200).FormatImage(32, 32, true).Align(AlignLeftRigthCenter.Center, AlignLeftRigthCenter.Center)
             )
     )
 }

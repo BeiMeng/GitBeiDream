@@ -80,10 +80,13 @@
                 return "否";
             },
             //格式化图片
-            formatImage: function (width, height) {
+            formatImage: function (width, height,isClass) {
                 width = width || 16;
                 height = height || 16;
                 return function (value, row) {
+                    if (isClass) {
+                        return "<div class='" + value + "' style='width:" + getWidth() + "px;height:" + getHeight() + "px'></div>";
+                    }
                     return "<image src='" + value + "' style='width:" + getWidth() + "px;height:" + getHeight() + "px' />";
 
                     //获取宽度

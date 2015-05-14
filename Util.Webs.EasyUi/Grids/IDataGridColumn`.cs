@@ -46,12 +46,14 @@ namespace Util.Webs.EasyUi.Grids {
         /// 格式化日期
         /// </summary>
         T FormatDate();
+
         /// <summary>
         /// 格式化图片
         /// </summary>
         /// <param name="width">宽度</param>
         /// <param name="height">高度</param>
-        T FormatImage( int width = 16, int height = 16 );
+        /// <param name="isClass">是否是CSS样式，默认false为图片路径</param>
+        T FormatImage( int width = 16, int height = 16,bool isClass=false );
         /// <summary>
         /// 冻结列
         /// </summary>

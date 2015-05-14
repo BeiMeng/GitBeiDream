@@ -569,6 +569,10 @@
       <Project>{fe49cf3b-6563-447b-b94e-018b334096e4}</Project>
       <Name>FluentBootstrap</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Util.Json\Util.Json.csproj">
+      <Project>{ed8e071e-aaca-4797-9aa7-7b03dad45225}</Project>
+      <Name>Util.Json</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Util.Logs.Log4\Util.Logs.Log4.csproj">
       <Project>{e4f100cf-3865-4f20-a87a-33a009dafa8c}</Project>
       <Name>Util.Logs.Log4</Name>

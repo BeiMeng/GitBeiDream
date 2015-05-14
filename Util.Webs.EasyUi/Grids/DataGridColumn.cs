@@ -204,8 +204,10 @@ namespace Util.Webs.EasyUi.Grids {
         /// </summary>
         /// <param name="width">宽度</param>
         /// <param name="height">高度</param>
-        public IDataGridColumn FormatImage( int width = 16, int height = 16 ) {
-            return Format( string.Format( "$.easyui.formatImage({0},{1})",width,height ) );
+        /// <param name="isClass">是否是CSS样式，默认false为图片路径</param>
+        public IDataGridColumn FormatImage(int width = 16, int height = 16, bool isClass = false)
+        {
+            return Format(string.Format("$.easyui.formatImage({0},{1},{2})", width, height,isClass.ToString().ToLower()));
         }
 
         /// <summary>
