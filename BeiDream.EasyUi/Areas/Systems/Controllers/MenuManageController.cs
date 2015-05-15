@@ -1,12 +1,12 @@
 ﻿using BeiDream.EasyUi.Common;
 using System;
 using System.Collections.Generic;
-
 using System.Web;
 using System.Web.Mvc;
-using BeiDream.EasyUi.Areas.Systems.ViewModel;
+using BeiDream.Service.Dtos.Systems;
 using BeiDream.Service.IService;
 using BeiDream.Service.PetaPoco.Service;
+using Util;
 using Util.Webs.EasyUi.Results;
 using Util.Webs.EasyUi.Trees;
 
@@ -26,48 +26,70 @@ namespace BeiDream.EasyUi.Areas.Systems.Controllers
 
         public ActionResult Query(QueryModel query)
         {
-            List<ITreeNode> treeNodes;
+            const LoadMode loadMode = LoadMode.Sync;
+            switch (loadMode)
+            {
+                    case LoadMode.Async:
+                        return AsyncQueryLoad(query);
+                    case LoadMode.Sync:
+                        return SyncQueryLoad(query);
+                    default:
+                        return AsyncQueryLoad(query);
+            }
+        }
+        /// <summary>
+        /// 同步一次性加载
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        private ActionResult SyncQueryLoad(QueryModel query)
+        {
+            List<MenuViewModel> treeNodes = _menuService.GetAllTreeNodes();
+            //下面这段执行则节点不展开
+            //foreach (var treeNode in treeNodes)
+            //{
+            //    treeNode.state = "closed";
+            //}
+            PagedList<MenuViewModel> result = new PagedList<MenuViewModel>(treeNodes, query.Page, query.Rows);
+            return new TreeGridResult(result, true, result.TotalItemCount).GetResult();
+        }
+        /// <summary>
+        /// 异步，一次只加载一级节点
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        private ActionResult AsyncQueryLoad(QueryModel query)
+        {
+            List<MenuViewModel> treeNodes;
             if (query.Id == null)
             {
                 treeNodes = _menuService.GetNavigationMenu();
-                List<MenuViewModel> liss=new List<MenuViewModel>();
                 foreach (var treeNode in treeNodes)
                 {
                     treeNode.state = "closed";
-                    liss.Add(Mapper(treeNode));
                 }
-                //PagedList<ITreeNode> result = new PagedList<ITreeNode>(treeNodes, query.Page, query.Rows);
-                PagedList<MenuViewModel> result = new PagedList<MenuViewModel>(liss, query.Page, query.Rows);
-                return new TreeGridResult(result,true,result.TotalItemCount).GetResult();
+                PagedList<MenuViewModel> result = new PagedList<MenuViewModel>(treeNodes, query.Page, query.Rows);
+                return new TreeGridResult(result, true, result.TotalItemCount).GetResult();
             }
             else
             {
-                treeNodes = _menuService.GetNavigationMenuChildrenNodes(query.Id);
-                List<MenuViewModel> liss = new List<MenuViewModel>();
+                treeNodes = _menuService.GetMenuManageChildrenNodes(query.Id);
                 foreach (var treeNode in treeNodes)
                 {
                     treeNode.state = "closed";
-                    liss.Add(Mapper(treeNode));
                 }
-                return new TreeGridResult(liss, true, -1).GetResult();
+                return new TreeGridResult(treeNodes, true, -1).GetResult();
             }
-
         }
 
-        private MenuViewModel Mapper(ITreeNode model)
+        public ActionResult Save(string addList, string updateList, string deleteList)
         {
-            MenuViewModel menuViewModel=new MenuViewModel();
-            menuViewModel.Attributes = model.Attributes;
-            menuViewModel.Checked = model.Checked;
-            menuViewModel.IconClass = model.IconClass;
-            menuViewModel.iconCls = model.IconClass;
-            menuViewModel.Id = model.Id;
-            menuViewModel.ParentId = model.ParentId;
-            menuViewModel.Text = model.Text;
-            menuViewModel.children = model.children;
-            menuViewModel.state = model.state;
-            menuViewModel.Level = model.Level;
-            return menuViewModel;
+            var listAdd = Util.Json.ToObject<List<MenuViewModel>>(addList);
+            var listUpdate = Util.Json.ToObject<List<MenuViewModel>>(updateList);
+            var listDelete = Util.Json.ToObject<List<MenuViewModel>>(deleteList);
+            //var data = Service.Save(listAdd, listUpdate, listDelete);
+            //return Ok(R.SaveSuccess, data);
+            return Json("OK");
         }
     }
 

@@ -196,6 +196,10 @@ namespace FluentBootstrap
                 // We could suppress output of the value when the value is string.Empty, but leaving it there is still valid HTML5 and works better for other standards like XHTML
                 // See https://html.spec.whatwg.org/multipage/infrastructure.html#boolean-attribute
                 string encoded = HttpUtility.HtmlAttributeEncode(attribute.Value);
+                // 上面的方法会将双单引号('')转换为(&#39;&#39;)，替换回来
+                encoded = encoded.Replace("&#39;&#39;", "''");
+                // 上面的方法会将单引号('id')转换为(&#39;id&#39;)，替换回来
+                encoded = encoded.Replace("&#39;", "'");
                 startTag.Append(" " + attribute.Key + "=\"" + encoded + "\"");
             }
             startTag.Append(">");

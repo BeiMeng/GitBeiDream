@@ -1,4 +1,5 @@
-﻿@model BeiDream.EasyUi.Areas.Systems.ViewModel.MenuViewModel
+﻿@model BeiDream.Service.Dtos.Systems.MenuViewModel
+
 @{
     var x = @Html.EasyUi();
 }
@@ -24,23 +25,27 @@
 @section top {
     @*工具栏*@
     <div class="toolbar">
-        @Html.Bootstrap().Button("新增").SetIcon(Icon.Inbox).SetState(ButtonState.Primary).SetSize(ButtonSize.Xs).AddAttribute("data-toggle", "tooltip").AddAttribute("title", "进行该操作后,记得保存")
-        @Html.Bootstrap().Button("编辑").SetIcon(Icon.Pencil).SetState(ButtonState.Info).SetSize(ButtonSize.Xs).AddAttribute("data-toggle", "tooltip").AddAttribute("title", "进行该操作后,记得保存")
-        @Html.Bootstrap().Button("撤销").SetIcon(Icon.Stop).SetState(ButtonState.Warning).SetSize(ButtonSize.Xs)
-        @Html.Bootstrap().Button("删除").SetIcon(Icon.Remove).SetState(ButtonState.Danger).SetSize(ButtonSize.Xs).AddAttribute("data-toggle", "tooltip").AddAttribute("title", "进行该操作后,记得保存")
-        @Html.Bootstrap().Button("上移").SetIcon(Icon.ArrowUp).SetState(ButtonState.Primary).SetSize(ButtonSize.Xs).AddAttribute("data-toggle", "tooltip").AddAttribute("title", "进行该操作后,记得保存")
-        @Html.Bootstrap().Button("下移").SetIcon(Icon.ArrowDown).SetState(ButtonState.Warning).SetSize(ButtonSize.Xs).AddAttribute("data-toggle", "tooltip").AddAttribute("title", "进行该操作后,记得保存")
-        @Html.Bootstrap().Button("保存").SetIcon(Icon.Save).SetState(ButtonState.Success).SetSize(ButtonSize.Xs)
-        @Html.Bootstrap().Button("刷新").SetIcon(Icon.Refresh).SetState(ButtonState.Info).SetSize(ButtonSize.Xs)
+        @Html.Bootstrap().Button("新增").SetIcon(Icon.Inbox).SetState(ButtonState.Primary).SetSize(ButtonSize.Xs).AddAttribute("data-toggle", "tooltip").AddAttribute("title", "进行该操作后,记得保存").AddAttribute("onClick","$.easyui.treegrid.addRoot({},'')")
+        @Html.Bootstrap().Button("新增下级").SetIcon(Icon.Inbox).SetState(ButtonState.Success).SetSize(ButtonSize.Xs).AddAttribute("data-toggle", "tooltip").AddAttribute("title", "进行该操作后,记得保存").AddAttribute("onClick", "$.easyui.treegrid.addToChild({},'')")
+        @Html.Bootstrap().Button("编辑").SetIcon(Icon.Pencil).SetState(ButtonState.Info).SetSize(ButtonSize.Xs).AddAttribute("data-toggle", "tooltip").AddAttribute("title", "进行该操作后,记得保存").AddAttribute("onClick", "$.easyui.treegrid.edit()")
+        @Html.Bootstrap().Button("撤销").SetIcon(Icon.Stop).SetState(ButtonState.Warning).SetSize(ButtonSize.Xs).AddAttribute("onClick", "$.easyui.treegrid.cancel()")
+        @Html.Bootstrap().Button("删除").SetIcon(Icon.Remove).SetState(ButtonState.Danger).SetSize(ButtonSize.Xs).AddAttribute("data-toggle", "tooltip").AddAttribute("title", "进行该操作后,记得保存").AddAttribute("onClick", "$.easyui.treegrid.deleteById()")
+        @Html.Bootstrap().Button("上移").SetIcon(Icon.ArrowUp).SetState(ButtonState.Primary).SetSize(ButtonSize.Xs).AddAttribute("data-toggle", "tooltip").AddAttribute("title", "进行该操作后,记得保存").AddAttribute("onClick", "$.easyui.treegrid.moveUp()")
+        @Html.Bootstrap().Button("下移").SetIcon(Icon.ArrowDown).SetState(ButtonState.Warning).SetSize(ButtonSize.Xs).AddAttribute("data-toggle", "tooltip").AddAttribute("title", "进行该操作后,记得保存").AddAttribute("onClick", "$.easyui.treegrid.moveDown()")
+        @Html.Bootstrap().Button("保存").SetIcon(Icon.Save).SetState(ButtonState.Success).SetSize(ButtonSize.Xs).AddAttribute("onClick", "$.easyui.treegrid.save('/Systems/MenuManage/Save',null,'','')")
+        @Html.Bootstrap().Button("刷新").SetIcon(Icon.Refresh).SetState(ButtonState.Info).SetSize(ButtonSize.Xs).AddAttribute("onClick", "$.easyui.treegrid.refresh('','')")
     </div>
 }
 @section content {
     @*表格*@
-    @(x.TreeGrid("grid").Url("/Systems/MenuManage/Query").Fit()            
+    @(x.TreeGrid("grid").Url("/Systems/MenuManage/Query").Fit().EnableDrag()          
             .Columns(
                 x.GridColumn(t => t.Id).CheckBox(),
                 x.GridColumn(t => t.Text,200,true),
-                                x.GridColumn(t => t.IconClass, 200).FormatImage(32, 32, true).Align(AlignLeftRigthCenter.Center, AlignLeftRigthCenter.Center)
+                x.GridColumn(t => t.Code, 200, true),
+                x.GridColumn(t => t.PinYin, 200, true),
+                x.GridColumn(t => t.IconClass, 200,true).FormatImage(64, 64, true).Align(AlignLeftRigthCenter.Center, AlignLeftRigthCenter.Center),
+                x.GridColumn(t => t.UpdateTime, 200, true)
             )
     )
 }

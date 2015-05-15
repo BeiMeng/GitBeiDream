@@ -84,11 +84,16 @@
                 width = width || 16;
                 height = height || 16;
                 return function (value, row) {
-                    if (isClass) {
-                        return "<div class='" + value + "' style='width:" + getWidth() + "px;height:" + getHeight() + "px'></div>";
-                    }
-                    return "<image src='" + value + "' style='width:" + getWidth() + "px;height:" + getHeight() + "px' />";
+                    var cc = getPoperty();
+                    return "<image " + getPoperty() + "='" + value + "' style='width:" + getWidth() + "px;height:" + getHeight() + "px' />";
 
+                    //获取宽度
+                    function getPoperty() {
+                        if (isClass) {
+                            return "class";
+                        }
+                        return "src";
+                    }
                     //获取宽度
                     function getWidth() {
                         var rowWidth = row.Width || 16;

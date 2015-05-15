@@ -111,7 +111,6 @@
   <ItemGroup>
     <Compile Include="Areas\Systems\Controllers\MenuManageController.cs" />
     <Compile Include="Areas\Systems\SystemsAreaRegistration.cs" />
-    <Compile Include="Areas\Systems\ViewModel\MenuViewModel.cs" />
     <Compile Include="Common\Page\IPager.cs" />
     <Compile Include="Common\Page\PagedList.cs" />
     <Compile Include="Common\Page\Pager.cs" />
@@ -542,7 +541,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Systems\Models\" />
     <Folder Include="Areas\Systems\Views\Shared\" />
     <Folder Include="Content\css\" />
   </ItemGroup>
