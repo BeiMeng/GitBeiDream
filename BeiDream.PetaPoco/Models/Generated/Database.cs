@@ -107,6 +107,7 @@ namespace PetaPocoORM
 
     
 	[TableName("BeiDream_Menu")]
+	[PrimaryKey("MenuId", autoIncrement=false)]
 	[ExplicitColumns]
     public partial class BeiDream_Menu : PetaPocoHelper.Record<BeiDream_Menu>  
     {
@@ -125,7 +126,8 @@ namespace PetaPocoORM
 		[Column] public DateTime? CreateTime { get; set; }
 		[Column] public string UpdatePerson { get; set; }
 		[Column] public DateTime? UpdateTime { get; set; }
-		[Column] public byte[] Version { get; set; }
+        [ResultColumn]
+        public byte[] Version { get; set; }
 	}
 }
 

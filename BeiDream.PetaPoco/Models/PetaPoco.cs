@@ -3486,7 +3486,9 @@ namespace PetaPoco
 				}
 
 				// Build column list for automatic select
-				QueryColumns = (from c in Columns where !c.Value.ResultColumn select c.Key).ToArray();
+				//QueryColumns = (from c in Columns where !c.Value.ResultColumn select c.Key).ToArray();
+                //BeiDream修改,查询条件保留特性为ResultColumn的列
+                QueryColumns = (from c in Columns select c.Key).ToArray();
 
 			}
 
