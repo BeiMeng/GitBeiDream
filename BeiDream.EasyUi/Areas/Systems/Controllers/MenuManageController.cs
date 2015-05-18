@@ -7,11 +7,13 @@ using BeiDream.Service.Dtos.Systems;
 using BeiDream.Service.IService;
 using BeiDream.Service.PetaPoco.Service;
 using Util;
+using Util.Webs.EasyUi.Forms;
 using Util.Webs.EasyUi.Results;
 using Util.Webs.EasyUi.Trees;
 
 namespace BeiDream.EasyUi.Areas.Systems.Controllers
 {
+    [FormExceptionHandler]
     public class MenuManageController : Controller
     {
         //todo IOC依赖注入，Autofac
@@ -24,9 +26,15 @@ namespace BeiDream.EasyUi.Areas.Systems.Controllers
             return View();
         }
 
+        public ActionResult CreateNewRow(string parentId)
+        {
+            MenuViewModel newDto = _menuService.CreatNew(parentId);
+            return Content(Util.Json.ToJson(newDto));
+        }
+
         public ActionResult Query(QueryModel query)
         {
-            const LoadMode loadMode = LoadMode.Sync;
+            const LoadMode loadMode = LoadMode.Async;
             switch (loadMode)
             {
                     case LoadMode.Async:
@@ -87,9 +95,8 @@ namespace BeiDream.EasyUi.Areas.Systems.Controllers
             var listAdd = Util.Json.ToObject<List<MenuViewModel>>(addList);
             var listUpdate = Util.Json.ToObject<List<MenuViewModel>>(updateList);
             var listDelete = Util.Json.ToObject<List<MenuViewModel>>(deleteList);
-            //var data = Service.Save(listAdd, listUpdate, listDelete);
-            //return Ok(R.SaveSuccess, data);
-            return Json("OK");
+            var data=_menuService.Save(listAdd, listUpdate, listDelete);
+            return new EasyUiResult(StateCode.Ok, "操作成功", data).GetResult();
         }
     }
 
