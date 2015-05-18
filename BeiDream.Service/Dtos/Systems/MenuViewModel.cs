@@ -70,7 +70,6 @@ namespace BeiDream.Service.Dtos.Systems
         /// <summary>
         /// 控制器路径
         /// </summary>
-        [Required(ErrorMessage = "控制器路径不能为空")]
         [Display(Name = "控制器路径")]
         [DataMember]
         public string Url { get; set; }

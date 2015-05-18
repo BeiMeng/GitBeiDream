@@ -18,6 +18,7 @@ namespace BeiDream.EasyUi.Areas.Systems.Controllers
     {
         //todo IOC依赖注入，Autofac
         readonly IMenuService _menuService = new PetaPocoMenuService();
+        private const LoadMode loadMode = LoadMode.Sync;
         //
         // GET: /Systems/MenuManage/
 
@@ -34,7 +35,6 @@ namespace BeiDream.EasyUi.Areas.Systems.Controllers
 
         public ActionResult Query(QueryModel query)
         {
-            const LoadMode loadMode = LoadMode.Async;
             switch (loadMode)
             {
                     case LoadMode.Async:
@@ -53,11 +53,7 @@ namespace BeiDream.EasyUi.Areas.Systems.Controllers
         private ActionResult SyncQueryLoad(QueryModel query)
         {
             List<MenuViewModel> treeNodes = _menuService.GetAllTreeNodes();
-            //下面这段执行则节点不展开
-            //foreach (var treeNode in treeNodes)
-            //{
-            //    treeNode.state = "closed";
-            //}
+            SetState(treeNodes);
             PagedList<MenuViewModel> result = new PagedList<MenuViewModel>(treeNodes, query.Page, query.Rows);
             return new TreeGridResult(result, true, result.TotalItemCount).GetResult();
         }
@@ -72,21 +68,34 @@ namespace BeiDream.EasyUi.Areas.Systems.Controllers
             if (query.Id == null)
             {
                 treeNodes = _menuService.GetNavigationMenu();
-                foreach (var treeNode in treeNodes)
-                {
-                    treeNode.state = "closed";
-                }
+                SetState(treeNodes);
                 PagedList<MenuViewModel> result = new PagedList<MenuViewModel>(treeNodes, query.Page, query.Rows);
                 return new TreeGridResult(result, true, result.TotalItemCount).GetResult();
             }
             else
             {
                 treeNodes = _menuService.GetMenuManageChildrenNodes(query.Id);
-                foreach (var treeNode in treeNodes)
-                {
-                    treeNode.state = "closed";
-                }
+                SetState(treeNodes);
                 return new TreeGridResult(treeNodes, true, -1).GetResult();
+            }
+        }
+
+        private void SetState(List<MenuViewModel> treeNodes)
+        {
+            foreach (var treeNode in treeNodes)
+            {
+                switch (loadMode)
+                {
+                    case LoadMode.Async:
+                        treeNode.state = "closed";
+                        break;
+                    case LoadMode.Sync:
+                        treeNode.state = "open";
+                        break;
+                    default:
+                       treeNode.state = "closed";
+                       break;
+                }
             }
         }
 
@@ -96,6 +105,7 @@ namespace BeiDream.EasyUi.Areas.Systems.Controllers
             var listUpdate = Util.Json.ToObject<List<MenuViewModel>>(updateList);
             var listDelete = Util.Json.ToObject<List<MenuViewModel>>(deleteList);
             var data=_menuService.Save(listAdd, listUpdate, listDelete);
+            SetState(data);
             return new EasyUiResult(StateCode.Ok, "操作成功", data).GetResult();
         }
     }

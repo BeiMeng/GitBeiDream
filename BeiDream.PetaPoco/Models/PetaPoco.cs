@@ -2843,9 +2843,11 @@ namespace PetaPoco
 				}
 
 				var sql = ParametersHelper.ProcessParams(_sql, _args, args);
-
+                sql=sql.Replace("WHEREOR", "WHERE");
 				if (Is(lhs, "WHERE ") && Is(this, "WHERE "))
 					sql = "AND " + sql.Substring(6);
+                if (Is(lhs, "WHEREOR ") && Is(this, "WHEREOR "))
+                    sql = "OR " + sql.Substring(6);
 				if (Is(lhs, "ORDER BY ") && Is(this, "ORDER BY "))
 					sql = ", " + sql.Substring(9);
 
@@ -2867,7 +2869,16 @@ namespace PetaPoco
 		{
 			return Append(new Sql("WHERE (" + sql + ")", args));
 		}
-
+        /// <summary>
+        /// 扩展拼or的查询条件
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public Sql WhereOR(string sql, params object[] args)
+        {
+            return Append(new Sql("WHEREOR (" + sql + ")", args));
+        }
 		/// <summary>
 		/// Appends an SQL ORDER BY clause to this SQL builder
 		/// </summary>

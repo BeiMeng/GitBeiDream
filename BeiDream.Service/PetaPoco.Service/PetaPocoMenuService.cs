@@ -163,7 +163,7 @@ namespace BeiDream.Service.PetaPoco.Service
         private void ValidateAddCodeRepeatAndTextRepeat(BeiDream_Menu beiDreamMenu)
         {
             Sql sql = new Sql();
-            sql.Where("Code=@Code  or Text=@Text", new { Code = beiDreamMenu.Code, Text = beiDreamMenu.Text });
+            sql.Where("Code=@Code  or Text=@Text", new {beiDreamMenu.Code, beiDreamMenu.Text });
             List<BeiDream_Menu> menus = PetaPocoHelper.GetInstance().Fetch<BeiDream_Menu>(sql);
             if (menus == null || menus.Count == 0)
                 return;
@@ -332,6 +332,7 @@ namespace BeiDream.Service.PetaPoco.Service
             var _addList = addList.Select(ToEntity).Distinct().ToList();
             var _updateList = updateList.Select(ToEntity).Distinct().ToList();
             var _deleteList = deleteList.Select(ToEntity).Distinct().ToList();
+            List<string> ids = GetIds(_addList, _updateList, _deleteList);
             //修正增改数据的Path和level
             new TreeServiceHelper(_addList, _updateList);
             #region 保存操作数据到数据库的事,物
@@ -360,7 +361,7 @@ namespace BeiDream.Service.PetaPoco.Service
                     {
                         foreach (var childrenMenu in childrenMenus)
                         {
-                            dbContext.Delete<BeiDream_Menu>(childrenMenu.Id);
+                            dbContext.Delete<BeiDream_Menu>((object)childrenMenu.Id);
                         }
                     }
                 }
@@ -372,11 +373,10 @@ namespace BeiDream.Service.PetaPoco.Service
                 throw new Warning(ex);
             } 
             #endregion
-            List<string> ids = GetIds(_addList, _updateList, _deleteList);
             Sql sql=new Sql();
             foreach (var id in ids)
             {
-                sql.Where("MenuId=@0", id);
+                sql.WhereOR("MenuId=@0", id);
             }
             List<BeiDream_Menu> returnList= dbContext.Fetch<BeiDream_Menu>(sql);
             return returnList.Select(ToDto).ToList();

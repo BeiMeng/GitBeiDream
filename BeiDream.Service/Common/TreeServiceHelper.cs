@@ -167,6 +167,7 @@ namespace BeiDream.Service.Common
         /// </summary>
         private void InitFirstLevel(BeiDream_Menu me)
         {
+            me.ParentId = null;   //一级节点前台会自动生成"0000-0000-0000-00000000"
             me.Level = 1;
             me.Path = string.Format("{0},", me.MenuId);
         }
