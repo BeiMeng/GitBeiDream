@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\TreeServiceHelper.cs" />
     <Compile Include="Dtos\Systems\MenuViewModel.cs" />
     <Compile Include="Dtos\Systems\MenuViewModelExtension.cs" />
     <Compile Include="EF.Service\EfUserService.cs" />
