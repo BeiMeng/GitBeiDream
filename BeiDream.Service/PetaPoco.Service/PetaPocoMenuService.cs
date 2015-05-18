@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BeiDream.Service.Common;
 using BeiDream.Service.Dtos.Systems;
 using BeiDream.Service.IService;
 using PetaPoco;
@@ -150,6 +151,7 @@ namespace BeiDream.Service.PetaPoco.Service
         }
 
 
+        #region 新增的一系列操作
         private void AddBefore(MenuViewModel dto)
         {
             BeiDream_Menu beiDreamMenu = dto.ToEntity();
@@ -161,24 +163,36 @@ namespace BeiDream.Service.PetaPoco.Service
         private void ValidateAddCodeRepeatAndTextRepeat(BeiDream_Menu beiDreamMenu)
         {
             Sql sql = new Sql();
-            sql.Where("Code=@Code  or Text=@Text", new{Code=beiDreamMenu.Code, Text=beiDreamMenu.Text});
+            sql.Where("Code=@Code  or Text=@Text", new { Code = beiDreamMenu.Code, Text = beiDreamMenu.Text });
             List<BeiDream_Menu> menus = PetaPocoHelper.GetInstance().Fetch<BeiDream_Menu>(sql);
             if (menus == null || menus.Count == 0)
                 return;
             else
                 throw new Warning(string.Format("菜单 '{0}' 已存在，请修改", "编码"));
         }
-
+        /// <summary>
+        /// 新增初始化
+        /// </summary>
+        /// <param name="addModel"></param>
+        private void AddInit(BeiDream_Menu addModel)
+        {
+            //FixPathAndLevel(addModel);
+            addModel.CreatePerson = "BeiDrem";
+            addModel.CreateTime = DateTime.Now;
+            addModel.PinYin = Str.PinYin(addModel.Text);
+        }
         public void Add(BeiDream_Menu beiDreamMenu)
         {
             AddInit(beiDreamMenu);
             PetaPocoHelper.GetInstance().Insert(beiDreamMenu);
-        }
+        } 
+        #endregion
 
         public void Delete(BeiDream_Menu beiDreamMenu)
         {
             PetaPocoHelper.GetInstance().Delete(beiDreamMenu);
         }
+        #region 更新的一系列操作
         private void UpdateBefore(MenuViewModel dto)
         {
             BeiDream_Menu beiDreamMenu = dto.ToEntity();
@@ -197,7 +211,7 @@ namespace BeiDream.Service.PetaPoco.Service
             if (menusCode == null || menusCode.Count == 0)
             {
                 Sql sql = new Sql();
-                sql.Where("Text=@Text and MenuId<>@MenuId", new {Text = beiDreamMenu.Text, MenuId = beiDreamMenu.MenuId });
+                sql.Where("Text=@Text and MenuId<>@MenuId", new { Text = beiDreamMenu.Text, MenuId = beiDreamMenu.MenuId });
                 List<BeiDream_Menu> menus = PetaPocoHelper.GetInstance().Fetch<BeiDream_Menu>(sql);
                 if (menus == null || menus.Count == 0)
                     return;
@@ -207,11 +221,22 @@ namespace BeiDream.Service.PetaPoco.Service
             else
                 throw new Warning(string.Format("菜单 '{0}' 已存在，请修改", "编码"));
         }
+        /// <summary>
+        /// 更新初始化
+        /// </summary>
+        /// <param name="updateModel"></param>
+        private void UpdateInit(BeiDream_Menu updateModel)
+        {
+            //FixPathAndLevel(updateModel);
+            updateModel.UpdatePerson = "BeiDrem";
+            updateModel.UpdateTime = DateTime.Now;
+            updateModel.PinYin = Str.PinYin(updateModel.Text);
+        }
         public void Update(BeiDream_Menu beiDreamMenu)
         {
             UpdateInit(beiDreamMenu);
             PetaPocoHelper.GetInstance().Update(beiDreamMenu);
-        }
+        } 
         /// <summary>
         /// 版本号,乐观离线锁通过为每行数据添加一个版本号来识别当前数据的版本，在获取数据时将版本号保存下来，
         /// 更新数据时将版本号作为Where中的过滤条件，如果该记录被更新，则版本号会发生变化，所以导致更新数据时影响行数为0，
@@ -229,6 +254,9 @@ namespace BeiDream.Service.PetaPoco.Service
                     return false;
             return true;
         }
+        #endregion
+
+        #region 修正增改数据的Path和level,目前有BUG
         /// <summary>
         /// 获取父Path
         /// </summary>
@@ -242,7 +270,7 @@ namespace BeiDream.Service.PetaPoco.Service
             {
                 path = parentId + "," + path;
             }
-            string nextParentId =GetNextParentId(parentId);
+            string nextParentId = GetNextParentId(parentId);
             while (!string.IsNullOrEmpty(nextParentId))
             {
                 path = nextParentId + "," + path;
@@ -271,11 +299,12 @@ namespace BeiDream.Service.PetaPoco.Service
             }
             else
             {
-                beiDreamMenu.Path=GetParentPath(beiDreamMenu)+ beiDreamMenu.MenuId + ",";
+                beiDreamMenu.Path = GetParentPath(beiDreamMenu) + beiDreamMenu.MenuId + ",";
                 string[] str = beiDreamMenu.Path.Split(',');
-                beiDreamMenu.Level = str.Length-1;
+                beiDreamMenu.Level = str.Length - 1;
             }
-        }
+        } 
+        #endregion
         /// <summary>
         /// 获取所有前台增删改的数据id
         /// </summary>
@@ -303,20 +332,21 @@ namespace BeiDream.Service.PetaPoco.Service
             var _addList = addList.Select(ToEntity).Distinct().ToList();
             var _updateList = updateList.Select(ToEntity).Distinct().ToList();
             var _deleteList = deleteList.Select(ToEntity).Distinct().ToList();
+            //修正增改数据的Path和level
+            new TreeServiceHelper(_addList, _updateList);
+            #region 保存操作数据到数据库的事,物
             var dbContext = PetaPocoHelper.GetInstance();
             dbContext.BeginTransaction();
             try
             {
                 foreach (var addModel in _addList)
                 {
-                    FixPathAndLevel(addModel);
                     AddInit(addModel);
                     dbContext.Insert(addModel);
                 }
                 foreach (var updateModel in _updateList)
                 {
-                    UpdateInit(updateModel);
-                    updateModel.UpdateTime = DateTime.Now;
+                    UpdateInit(updateModel);                  
 
                     dbContext.Update(updateModel);
                 }
@@ -340,7 +370,8 @@ namespace BeiDream.Service.PetaPoco.Service
             {
                 dbContext.AbortTransaction();
                 throw new Warning(ex);
-            }
+            } 
+            #endregion
             List<string> ids = GetIds(_addList, _updateList, _deleteList);
             Sql sql=new Sql();
             foreach (var id in ids)
@@ -350,27 +381,6 @@ namespace BeiDream.Service.PetaPoco.Service
             List<BeiDream_Menu> returnList= dbContext.Fetch<BeiDream_Menu>(sql);
             return returnList.Select(ToDto).ToList();
         }
-        /// <summary>
-        /// 更新初始化
-        /// </summary>
-        /// <param name="updateModel"></param>
-        private void UpdateInit(BeiDream_Menu updateModel)
-        {
-            FixPathAndLevel(updateModel);
-            updateModel.UpdatePerson = "BeiDrem";
-            updateModel.PinYin = Str.PinYin(updateModel.Text);
-        }
-        /// <summary>
-        /// 新增初始化
-        /// </summary>
-        /// <param name="addModel"></param>
-        private static void AddInit(BeiDream_Menu addModel)
-        {
-            addModel.CreatePerson = "BeiDrem";
-            addModel.CreateTime = DateTime.Now;
-            addModel.PinYin = Str.PinYin(addModel.Text);
-        }
-
         /// <summary>
         /// 保存前操作
         /// </summary>
@@ -384,7 +394,6 @@ namespace BeiDream.Service.PetaPoco.Service
             addList.ForEach(AddBefore);
             updateList.ForEach(UpdateBefore);
         }
-
         /// <summary>
         /// 过滤无效数据
         /// </summary>
@@ -395,22 +404,6 @@ namespace BeiDream.Service.PetaPoco.Service
                 if (deleteList.Any(d => d.Id == id))
                     list.Remove(list.Find(t => t.Id == id));
             });
-        }
-        /// <summary>
-        /// 转换为实体
-        /// </summary>
-        /// <param name="dto">数据传输对象</param>
-        private BeiDream_Menu ToEntity(MenuViewModel dto)
-        {
-            return dto.ToEntity();
-        }
-        /// <summary>
-        /// 转换为数据传输对象
-        /// </summary>
-        /// <param name="entity">数据传输对象</param>
-        private MenuViewModel ToDto(BeiDream_Menu entity)
-        {
-            return entity.ToDto();
         }
 
         /// <summary>
@@ -437,12 +430,31 @@ namespace BeiDream.Service.PetaPoco.Service
         private int GetSortId(string parentId)
         {
             Sql sql = new Sql();
-            sql.Where(parentId == null ? "ParentId is null" : "ParentId=@0", parentId);
+            sql.Where(string.IsNullOrEmpty(parentId) ? "ParentId is null" : "ParentId=@0", parentId);
             sql.OrderBy("SortId DESC");   //默认ASC升序，降序为DESC
             BeiDream_Menu beiDreamMenu = PetaPocoHelper.GetInstance().FirstOrDefault<BeiDream_Menu>(sql);
             if (beiDreamMenu == null)
                 return 0;
             return beiDreamMenu.SortId + 1;
         }
+
+        #region 数据传输对象Dto和实体Enitiy相互转化的方法
+        /// <summary>
+        /// 转换为实体
+        /// </summary>
+        /// <param name="dto">数据传输对象</param>
+        private BeiDream_Menu ToEntity(MenuViewModel dto)
+        {
+            return dto.ToEntity();
+        }
+        /// <summary>
+        /// 转换为数据传输对象
+        /// </summary>
+        /// <param name="entity">数据传输对象</param>
+        private MenuViewModel ToDto(BeiDream_Menu entity)
+        {
+            return entity.ToDto();
+        } 
+        #endregion
     }
 }
